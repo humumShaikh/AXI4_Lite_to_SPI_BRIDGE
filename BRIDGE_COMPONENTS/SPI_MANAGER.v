@@ -109,10 +109,7 @@ module SPI_MANAGER
 
                 FETCH               :   begin
                                             rd_en <= 0;
-
-                                            wr_stat_up_addr <= {1'b1 , {rd_slave_addr[3:0]}};
-                                            wr_stat_up_en <= 1;
-
+                                            
                                             tx_reg_addr <= rd_slave_addr;
 
                                             tempAddress <= rd_slave_addr;
@@ -121,7 +118,6 @@ module SPI_MANAGER
                                         end         
 
                 INITCOMM            :   begin
-                                            wr_stat_up_en <= 0;
                                             SPI_start <= 1;
                                             spiStartPrev <= SPICLK;
 
@@ -174,6 +170,10 @@ module SPI_MANAGER
                                             if(spiStartPrev == 0    &&  SPICLK == 1)
                                             begin
                                                 SPI_start <= 0;
+                                                
+                                                wr_stat_up_addr <= {1'b1 , {tempAddress[3:0]}};
+                                                wr_stat_up_en <= 1;
+                                                
                                                 SPISTATE <= FINISH;
                                             end
 
@@ -195,6 +195,7 @@ module SPI_MANAGER
                                         end         
 
                 FINISH              :   begin
+                                            wr_stat_up_en <= 0;
                                             if(SPI_busy != 1)
                                             begin
                                                 rd_stat_up <= 1;
