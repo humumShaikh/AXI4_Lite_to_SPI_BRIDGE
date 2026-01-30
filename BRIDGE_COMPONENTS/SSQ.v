@@ -356,5 +356,4 @@ module SSQ
         
     end
 
-        
 endmodule
