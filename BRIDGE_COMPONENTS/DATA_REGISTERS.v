@@ -107,8 +107,6 @@ module DATA_REGISTERS
             read_data_reg[rx_reg_addr] <= din;
         end
     end
-    
-    
 
 
 endmodule
