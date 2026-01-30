@@ -112,7 +112,6 @@ module SPI_M
     end //-//-//
     
     
-    
     always @(negedge sclk)
     begin
         if(sclk_flag == 1'b1)
