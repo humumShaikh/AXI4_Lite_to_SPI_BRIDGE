@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
+// Company: CWIR3
+// Engineer: copperwire
 // 
 // Create Date: 29.01.2026 01:03:11
 // Design Name: 
@@ -66,17 +66,21 @@ module AXI2SPI
     wire [09:00] smsm;
     
     
+    reg clkbuffer;
+    
+    always @(*) clkbuffer = ACLK;
+    
     
     SPI_CLOCKER SPICLKER
     ( 
-        .clkin(ACLK),
+        .clkin(clkbuffer),
         .reset(~ARESETN),
         .clkout(spiclk)
     );
     
     AXI_S   AXIS
     (
-        .ACLK(ACLK),
+        .ACLK(clkbuffer),
         .ARESETN(ARESETN),
         
         .AWADDR(AWADDR),
@@ -136,7 +140,7 @@ module AXI2SPI
         
         .reset(~ARESETN),
         
-        .ACLK(ACLK),
+        .ACLK(clkbuffer),
         
         .wrSlaveAddr(ssax[08:01]),
         .wr_en(ssax[09]),
@@ -228,7 +232,7 @@ module AXI2SPI
         
         .SSQ_empty(sssm[09]),
         
-        .ACLK(ACLK),
+        .ACLK(clkbuffer),
         
         .SPI_select(smsm[07:00]),
         .SPI_start(smsm[08]),
